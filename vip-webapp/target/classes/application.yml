@@ -3,7 +3,7 @@ spring:
   application:
     name: vip
   datasource:
-    url: jdbc:mysql://115.159.219.176:3306/vip
+    url: jdbc:mysql://115.159.219.176:3306/vip？&useSSL=false
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: root
