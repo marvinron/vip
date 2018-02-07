@@ -6,19 +6,134 @@
 
     <resultMap id="vipUserResultMap" type="VipUsers">
         <id property="id" column="id" javaType="java.lang.Long" jdbcType="BIGINT"/>
-        <result property="account" column="account" javaType="java.lang.String" jdbcType="VARCHAR"/>
-        <result property="gmtCreate" column="gmt_create" javaType="java.util.Date" jdbcType="DATE"/>
-        <result property="gmtModify" column="gmt_modify" javaType="java.util.Date" jdbcType="DATE"/>
-        <result property="lastLoginIp" column="last_login_ip" javaType="java.lang.String" jdbcType="VARCHAR"/>
-        <result property="loginNum" column="login_num" javaType="java.lang.Long" jdbcType="BIGINT"/>
-        <result property="lastLoginTime" column="last_login_time" javaType="java.util.Date" jdbcType="DATE"/>
-        <result property="name" column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
-        <result property="password" column="password" javaType="java.lang.String" jdbcType="VARCHAR"/>
-        <result property="status" column="status" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="account" column="ACCOUNT" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="gmtCreate" column="GMT_CREATE" javaType="java.util.Date" jdbcType="DATE"/>
+        <result property="gmtModify" column="GMT_MODIFY" javaType="java.util.Date" jdbcType="DATE"/>
+        <result property="lastLoginIp" column="LAST_LOGIN_IP" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="loginNum" column="LOGIN_NUM" javaType="java.lang.Long" jdbcType="BIGINT"/>
+        <result property="lastLoginTime" column="LAST_LOGIN_TIME" javaType="java.util.Date" jdbcType="DATE"/>
+        <result property="name" column="NAME" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="password" column="PASSWORD" javaType="java.lang.String" jdbcType="VARCHAR"/>
+        <result property="status" column="STATUS" javaType="java.lang.Long" jdbcType="BIGINT"/>
     </resultMap>
 
+    <update id="updateById">
+        update vip_users
+        <set>
+            <trim suffixOverrides=",">
+                <if test="account != null">
+                    ACCOUNT=#{account},
+                </if>
+                <if test="password != null">
+                    PASSWORD=#{password},
+                </if>
+                <if test="name != null">
+                    NAME=#{name},
+                </if>
+                <if test="status != null">
+                    STATUS=#{status},
+                </if>
+                <if test="lastLoginIp != null">
+                    LAST_LOGIN_IP=#{lastLoginIp},
+                </if>
+                <if test="lastLoginTime != null">
+                    LAST_LOGIN_TIME=#{lastLoginTime},
+                </if>
+                <if test="loginNum != null">
+                    LOGIN_NUM=#{loginNum},
+                </if>
+                <if test="gmtCreate != null">
+                    GMT_CREATE=#{gmtCreate},
+                </if>
+                <if test="gmtModify != null">
+                    GMT_MODIFY=#{gmtModify},
+                </if>
+            </trim>
 
-    <select id="getUserByName" resultType="VipUsers">
+        </set>
+        WHERE ID=#{id}
+    </update>
+    <delete id="deleteById">
+      DELETE FROM vip_users
+      WHERE ID=#{id}
+    </delete>
+
+
+    <select id="getUserByName" resultMap="vipUserResultMap">
         SELECT p.* from vip_users p where p.NAME=#{name}
     </select>
+
+
+    <select id="list" resultType="VipUsers">
+      SELECT P.* FROM vip_users P
+    </select>
+
+
+    <insert id="add" parameterType="VipUsers" useGeneratedKeys="true" keyProperty="id" keyColumn="ID">
+        insert into vip_users
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                `ID`,
+            </if>
+            <if test="account != null">
+                `ACCOUNT`,
+            </if>
+            <if test="password != null">
+                `PASSWORD`,
+            </if>
+            <if test="name != null">
+                `NAME`,
+            </if>
+            <if test="status != null">
+                `STATUS`,
+            </if>
+            <if test="lastLoginIp != null">
+                `LAST_LOGIN_IP`,
+            </if>
+            <if test="lastLoginTime != null">
+                `LAST_LOGIN_TIME`,
+            </if>
+            <if test="loginNum != null">
+                `LOGIN_NUM`,
+            </if>
+            <if test="gmtCreate != null">
+                `GMT_CREATE`,
+            </if>
+            <if test="gmtModify != null">
+                `GMT_MODIFY`,
+            </if>
+        </trim>
+        <trim prefix="values(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="account != null">
+                #{account},
+            </if>
+            <if test="password != null">
+                #{password},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="status != null">
+                #{status},
+            </if>
+            <if test="lastLoginIp != null">
+                #{lastLoginIp},
+            </if>
+            <if test="lastLoginTime != null">
+                #{lastLoginTime},
+            </if>
+            <if test="loginNum != null">
+                #{loginNum},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate},
+            </if>
+            <if test="gmtModify != null">
+                #{gmtModify},
+            </if>
+        </trim>
+    </insert>
 </mapper>

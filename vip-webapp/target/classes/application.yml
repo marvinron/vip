@@ -3,12 +3,13 @@ spring:
   application:
     name: vip
   datasource:
-    url: jdbc:mysql://115.159.219.176:3306/vip？&useSSL=false
+    url: jdbc:mysql://115.159.219.176:3306/vip?&useSSL=false
     driver-class-name: com.mysql.jdbc.Driver
     username: root
     password: root
 server:
   port: 9090
+
 mybatis:
   mapper-locations: classpath:mybatis/mapper/*.xml
   config-location: classpath:mybatis/config/mybatis-config.xml

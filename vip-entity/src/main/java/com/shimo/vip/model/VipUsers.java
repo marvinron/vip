@@ -57,6 +57,23 @@ public class VipUsers implements Serializable {
     private Date gmtModify;
 
 
+    public VipUsers(String account, String password, String name) {
+        this.account = account;
+        this.password = password;
+        this.name = name;
+    }
+
+    public VipUsers(String account, String password, String name, Date gmtCreate, Date gmtModify) {
+        this.account = account;
+        this.password = password;
+        this.name = name;
+        this.gmtCreate = gmtCreate;
+        this.gmtModify = gmtModify;
+    }
+
+    public VipUsers() {
+    }
+
     public Long getId() {
         return id;
     }
