@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/vip.iml" filepath="$PROJECT_DIR$/vip.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vip-common/vip-common.iml" filepath="$PROJECT_DIR$/vip-common/vip-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vip-dao/vip-dao.iml" filepath="$PROJECT_DIR$/vip-dao/vip-dao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vip-entity/vip-entity.iml" filepath="$PROJECT_DIR$/vip-entity/vip-entity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vip-service/vip-service.iml" filepath="$PROJECT_DIR$/vip-service/vip-service.iml" />
+      <module fileurl="file://$PROJECT_DIR$/vip-webapp/vip-webapp.iml" filepath="$PROJECT_DIR$/vip-webapp/vip-webapp.iml" />
+    </modules>
+  </component>
+</project>

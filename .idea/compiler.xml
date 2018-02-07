@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="vip-common" />
+        <module name="vip-entity" />
+        <module name="vip-service" />
+        <module name="vip-webapp" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="vip" target="1.8" />
+      <module name="vip-common" target="1.8" />
+      <module name="vip-dao" target="1.8" />
+      <module name="vip-entity" target="1.8" />
+      <module name="vip-service" target="1.8" />
+      <module name="vip-webapp" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
