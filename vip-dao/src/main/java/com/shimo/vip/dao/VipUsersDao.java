@@ -1,7 +1,7 @@
 package com.shimo.vip.dao;
 
 import com.shimo.vip.model.VipUsers;
-import org.springframework.stereotype.Repository;
+import com.shimo.vip.query.VipUsersPageQuery;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import java.util.List;
  * @Description: 管理员持久层接口
  * @date 2018/2/7 13:31
  **/
-@Repository
+
 public interface VipUsersDao {
 
     /**
@@ -48,5 +48,27 @@ public interface VipUsersDao {
      * @return
      */
     List<VipUsers> list();
+
+    /**
+     * 查询管理员数目
+     * @return
+     */
+    int countUser ();
+
+
+    /**
+     * 条件查询管理员数目
+     * @param query
+     * @return
+     */
+    int countUserByQuery (VipUsersPageQuery query);
+
+
+    /**
+     * 分页条件查询管理员用户列表
+     * @param query
+     * @return
+     */
+    List<VipUsers> listByQuery(VipUsersPageQuery query);
 
 }

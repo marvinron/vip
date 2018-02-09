@@ -4,6 +4,7 @@ package com.shimo.vip.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.shimo.vip.model.VipUsers;
+import com.shimo.vip.query.VipUsersPageQuery;
 import com.shimo.vip.service.VipUsersService;
 import com.shimo.vip.util.TokenUtil;
 import com.shimo.vip.vo.ResultBean;
@@ -76,6 +77,14 @@ public class VipUsersController {
     }
 
 
+    @GetMapping(value = "/count")
+    public  ResultBean<Integer> countUser () {
+        return new ResultBean<Integer>(usersService.countUser());
+    }
 
+    @GetMapping(value = "/page")
+    public ResultBean<VipUsersPageQuery> getVipCardPageByQuery (@ModelAttribute  VipUsersPageQuery query) {
+        return new ResultBean<>(usersService.listByQuery(query));
+    }
 
 }

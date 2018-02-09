@@ -21,7 +21,7 @@
         update vip_users
         <set>
             <trim suffixOverrides=",">
-                <if test="account != null">
+                <if test="account != null ">
                     ACCOUNT=#{account},
                 </if>
                 <if test="password != null">
@@ -66,6 +66,65 @@
 
     <select id="list" resultType="VipUsers">
       SELECT P.* FROM vip_users P
+    </select>
+    <select id="countUser" resultType="java.lang.Integer">
+        select count(*) from vip_users
+    </select>
+    <select id="countUserByQuery" resultType="java.lang.Integer"  parameterType="com.shimo.vip.query.VipUsersPageQuery">
+        SELECT count(*) FROM vip_users
+        <where>
+            <if test="account != null and account != ''">
+                and ACCOUNT like CONCAT('%',#{account},'%' )
+            </if>
+            <if test="name != null and name != ''">
+                and NAME like CONCAT('%',#{name},'%' )
+            </if>
+            <if test="status != null">
+                and STATUS = #{status}
+            </if>
+            <if test="gmtCreateStart != null ">
+                and #{gmtCreateStart} <![CDATA[<=]]> GMT_CREATE
+            </if>
+            <if test="gmtCreateEnd != null ">
+                and #{gmtCreateEnd} <![CDATA[>=]]> GMT_CREATE
+            </if>
+            <if test="gmtModifyStart != null ">
+                and #{gmtModifyStart} <![CDATA[<=]]> GMT_MODIFY
+            </if>
+            <if test="gmtModifyEnd != null ">
+                and #{gmtModifyEnd} <![CDATA[>=]]> GMT_MODIFY
+            </if>
+        </where>
+    </select>
+    <select id="listByQuery" resultMap="vipUserResultMap" parameterType="com.shimo.vip.query.VipUsersPageQuery">
+        SELECT * FROM vip_users
+        <where>
+            <if test="account != null  and account != ''">
+                and ACCOUNT like CONCAT('%',#{account},'%' )
+            </if>
+            <if test="name != null and name != ''">
+                and NAME like CONCAT('%',#{name},'%' )
+            </if>
+            <if test="status != null ">
+                and STATUS = #{status}
+            </if>
+            <if test="gmtCreateStart != null ">
+                and #{gmtCreateStart} <![CDATA[<=]]> GMT_CREATE
+            </if>
+            <if test="gmtCreateEnd != null ">
+                and #{gmtCreateEnd} <![CDATA[>=]]> GMT_CREATE
+            </if>
+            <if test="gmtModifyStart != null ">
+                and #{gmtModifyStart} <![CDATA[<=]]> GMT_MODIFY
+            </if>
+            <if test="gmtModifyEnd != null ">
+                and #{gmtModifyEnd} <![CDATA[>=]]> GMT_MODIFY
+            </if>
+        </where>
+        order by GMT_CREATE desc
+        <if test="start!=null and end!=null">
+            limit #{start},#{end}
+        </if>
     </select>
 
 

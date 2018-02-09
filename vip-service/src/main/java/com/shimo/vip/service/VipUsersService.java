@@ -1,6 +1,7 @@
 package com.shimo.vip.service;
 
 import com.shimo.vip.model.VipUsers;
+import com.shimo.vip.query.VipUsersPageQuery;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -58,4 +59,16 @@ public interface VipUsersService {
      */
     List<VipUsers> list();
 
+    /**
+     * 查询管理员数目
+     * @return
+     */
+    int countUser ();
+
+    /**
+     * 分页条件查询管理员用户列表
+     * @param query
+     * @return
+     */
+    VipUsersPageQuery listByQuery(VipUsersPageQuery query);
 }

@@ -1,6 +1,8 @@
 package com.shimo.vip.dao;
 
 import com.shimo.vip.model.VipUsers;
+import com.shimo.vip.query.VipUsersPageQuery;
+import com.shimo.vip.service.VipUsersService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,17 +24,20 @@ import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class VipUsersDaoTest {
+public class VipUsersServiceTest {
 
     @Autowired
-    private VipUsersDao vipUsersDao;
+    private VipUsersService vipUsersService;
 
 
 
     @Test
     public void add() throws Exception {
-        Assert.assertEquals(1
-                ,vipUsersDao.add(new VipUsers("1233@qq.com", "123456", "admin", new Date(), new Date())));
+        VipUsersPageQuery query = new VipUsersPageQuery();
+        query.setCurrPage(1);
+        query.setPageSize(2);
+        query = vipUsersService.listByQuery(query);
+        System.out.println(query);
     }
 
 }

@@ -4,6 +4,7 @@ import com.shimo.vip.VipUserEnum;
 import com.shimo.vip.dao.VipUsersDao;
 import com.shimo.vip.exception.VipUserException;
 import com.shimo.vip.model.VipUsers;
+import com.shimo.vip.query.VipUsersPageQuery;
 import com.shimo.vip.service.VipUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,5 +70,17 @@ public class VipUsersServiceImpl implements VipUsersService{
     @Override
     public List<VipUsers> list() {
         return vipUsersDao.list();
+    }
+
+    @Override
+    public int countUser() {
+        return vipUsersDao.countUser();
+    }
+
+    @Override
+    public VipUsersPageQuery listByQuery(VipUsersPageQuery query) {
+        query.setResult(vipUsersDao.listByQuery(query));
+        query.setTotal(vipUsersDao.countUserByQuery(query));
+        return query;
     }
 }
