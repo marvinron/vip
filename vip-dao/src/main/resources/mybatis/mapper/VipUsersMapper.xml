@@ -17,6 +17,8 @@
         <result property="status" column="STATUS" javaType="java.lang.Long" jdbcType="BIGINT"/>
     </resultMap>
 
+
+
     <update id="updateById">
         update vip_users
         <set>
