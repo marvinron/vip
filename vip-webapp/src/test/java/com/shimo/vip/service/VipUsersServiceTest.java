@@ -1,4 +1,4 @@
-package com.shimo.vip.dao;
+package com.shimo.vip.service;
 
 import com.shimo.vip.model.VipUsers;
 import com.shimo.vip.query.VipUsersPageQuery;
