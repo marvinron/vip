@@ -8,16 +8,16 @@
 		<result property="name" column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
 	</resultMap>
 	<select id="list" resultMap="CategoryResultMap">
-		select p.* from category p
+		select p.* from vip_category p
 	</select>
 	<select id="getCategoryById" resultMap="CategoryResultMap">
-		select * from category p where
+		select * from vip_category p where
 		<if test="categoryID != null">
 			p.category_id=#{categoryID}
 		</if>
 	</select>
 	<select id="getCategoryByName" resultMap="CategoryResultMap">
-		select * from category p where p.name=#{name}
+		select * from vip_category p where p.name=#{name}
 	</select>
 	<insert id="addCategory"  parameterType="Category" useGeneratedKeys="true" keyColumn="ID" keyProperty="id">
 		insert into category 
