@@ -6,10 +6,16 @@
 		<id property="id" column="ID" javaType="java.lang.Long" jdbcType="BIGINT"/>
 		<result property="categoryId" column="CATEGORY_ID" javaType="java.lang.String" jdbcType="VARCHAR"/>
 		<result property="name" column="name" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="categoryStatus" column="CATEGORY_STATUS" javaType="java.lang.Long" jdbcType="BIGINT"/>
+		<result property="gmtCreate" column="GMT_CREATE" javaType="java.util.Date" jdbcType="DATE"/>
+        <result property="gmtModify" column="GMT_MODIFY" javaType="java.util.Date" jdbcType="DATE"/>
 	</resultMap>
 	<select id="list" resultMap="CategoryResultMap">
 		select p.* from vip_category p
 	</select>
+	<select id="countCategory" resultType="java.lang.Integer">
+        select count(*) from vip_category
+    </select>
 	<select id="getCategoryById" resultMap="CategoryResultMap">
 		select * from vip_category p where
 		<if test="categoryID != null">
@@ -19,15 +25,81 @@
 	<select id="getCategoryByName" resultMap="CategoryResultMap">
 		select * from vip_category p where p.name=#{name}
 	</select>
-	<insert id="addCategory"  parameterType="Category" useGeneratedKeys="true" keyColumn="ID" keyProperty="id">
-		insert into category 
+	<select id="countCategoryByQuery" resultType="java.lang.Integer"  parameterType="com.shimo.vip.query.VipCategoryPageQuery">
+        SELECT count(*) FROM vip_category
+        <where>
+            <if test="categoryId != null and categoryId != ''">
+                and CATEGORY_ID like CONCAT('%',#{categoryId},'%' )
+            </if>
+            <if test="name != null and name != ''">
+                and NAME like CONCAT('%',#{name},'%' )
+            </if>
+            <if test="categoryStatus != null">
+                and CATEGORY_STATUS = #{categoryStatus}
+            </if>
+            <if test="gmtCreateStart != null ">
+                and #{gmtCreateStart} <![CDATA[<=]]> GMT_CREATE
+            </if>
+            <if test="gmtCreateEnd != null ">
+                and #{gmtCreateEnd} <![CDATA[>=]]> GMT_CREATE
+            </if>
+            <if test="gmtModifyStart != null ">
+                and #{gmtModifyStart} <![CDATA[<=]]> GMT_MODIFY
+            </if>
+            <if test="gmtModifyEnd != null ">
+                and #{gmtModifyEnd} <![CDATA[>=]]> GMT_MODIFY
+            </if>
+        </where>
+    </select>
+    <select id="listByQuery" resultMap="CategoryResultMap" parameterType="com.shimo.vip.query.VipCategoryPageQuery">
+        SELECT * FROM vip_users
+        <where>
+            <if test="categoryId != null  and categoryId != ''">
+                and CATEGORY_ID like CONCAT('%',#{categoryId},'%' )
+            </if>
+            <if test="name != null and name != ''">
+                and NAME like CONCAT('%',#{name},'%' )
+            </if>
+            <if test="categoryStatus != null ">
+                and CATEGORY_STATUS = #{categoryStatus}
+            </if>
+            <if test="gmtCreateStart != null ">
+                and #{gmtCreateStart} <![CDATA[<=]]> GMT_CREATE
+            </if>
+            <if test="gmtCreateEnd != null ">
+                and #{gmtCreateEnd} <![CDATA[>=]]> GMT_CREATE
+            </if>
+            <if test="gmtModifyStart != null ">
+                and #{gmtModifyStart} <![CDATA[<=]]> GMT_MODIFY
+            </if>
+            <if test="gmtModifyEnd != null ">
+                and #{gmtModifyEnd} <![CDATA[>=]]> GMT_MODIFY
+            </if>
+        </where>
+        order by GMT_CREATE desc
+        <if test="start!=null and end!=null">
+            limit #{start},#{end}
+        </if>
+    </select>
+    
+	<insert id="addCategory"  parameterType="VipCategory" useGeneratedKeys="true" keyColumn="ID" keyProperty="id">
+		insert into vip_category 
 		<trim prefix="(" suffix=")" suffixOverrides=",">
 			<if test="categoryID != null">
-				`category_id`,
+				`CATEGORY_ID`,
 			</if>
 			<if test="name != null">
-				`name`,
+				`NAME`,
 			</if>
+			<if test="categoryStatus != null">
+				`CATEGORY_STATUS`,
+			</if>
+			<if test="gmtCreate != null">
+                `GMT_CREATE`,
+            </if>
+            <if test="gmtModify != null">
+                `GMT_MODIFY`,
+            </if>
 		</trim>
 		<trim prefix="values(" suffix=")" suffixOverrides=",">
 			<if test="categoryID != null">
@@ -36,6 +108,39 @@
 			<if test="name != null">
 				#{name},
 			</if>
+			<if test="categoryStatus != null">
+				#{categoryStatus},
+			</if>
+			<if test="gmtCreate != null">
+                #{gmtCreate},
+            </if>
+            <if test="gmtModify != null">
+                #{gmtModify},
+            </if>
 		</trim>
 	</insert>
+	<update id="updateById">
+        update vip_category
+        <set>
+            <trim suffixOverrides=",">
+                <if test="name != null">
+                    NAME=#{name},
+                </if>
+                <if test="categoryStatus != null">
+                    CATEGORY_STATUS=#{categoryStatus},
+                </if>
+                <if test="gmtCreate != null">
+                    GMT_CREATE=#{gmtCreate},
+                </if>
+                <if test="gmtModify != null">
+                    GMT_MODIFY=#{gmtModify},
+                </if>
+            </trim>
+        </set>
+        WHERE CATEGORY_ID=#{categoryId}
+    </update>
+     <delete id="deleteById">
+      DELETE FROM vip_category
+      WHERE CATEGORY_ID=#{categoryId}
+    </delete>
 </mapper>

@@ -5,6 +5,9 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.shimo.vip.model.VipCategory;
+import com.shimo.vip.model.VipUsers;
+import com.shimo.vip.query.VipCategoryPageQuery;
+import com.shimo.vip.query.VipUsersPageQuery;
 
 /**
  * @version V1.0
@@ -34,4 +37,34 @@ public interface VipCategoryDao {
 	 * @param category
 	 */
 	int addCategory(VipCategory category);
+	/**
+     * 更新类目信息
+     * @param vipUsers
+     * @return
+     */
+    int updateById(VipCategory category);
+
+    /**
+     * 通过categoryId删除类目信息
+     * @param categoryId
+     * @return
+     */
+    int deleteById(String categoryId);
+    /**
+     * 查询类别数目
+     * @return
+     */
+    int countCategory ();
+    /**
+     * 条件查询类别数目
+     * @param query
+     * @return
+     */
+    int countCategoryByQuery (VipCategoryPageQuery query);
+    /**
+     * 分页条件查询类目信息列表
+     * @param query
+     * @return
+     */
+    List<VipCategory> listByQuery(VipCategoryPageQuery query);
 }
