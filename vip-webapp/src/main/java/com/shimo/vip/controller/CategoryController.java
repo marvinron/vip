@@ -33,8 +33,7 @@ public class CategoryController {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired
 	private CategoryService categoryService;
-	@Autowired
-    private ObjectMapper objectMapper;
+
 
 	/**
 	 * 查询类目信息列表
