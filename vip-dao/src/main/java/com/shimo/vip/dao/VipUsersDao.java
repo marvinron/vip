@@ -38,7 +38,7 @@ public interface VipUsersDao {
 
     /**
      * 通过id删除管理员用户信息
-     * @param id
+     * @param categoryId
      * @return
      */
     int deleteById(Long id);
