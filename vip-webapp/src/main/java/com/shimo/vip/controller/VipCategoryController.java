@@ -22,6 +22,9 @@ import com.shimo.vip.query.VipCategoryPageQuery;
 import com.shimo.vip.service.VipCategoryService;
 import com.shimo.vip.vo.ResultBean;
 
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+
 /**
  * 
  * @author xiaoli
@@ -44,6 +47,7 @@ public class VipCategoryController {
 	 * 查询类目信息列表
 	 */
 	@GetMapping("/")
+	@ApiOperation(value="查询类目信息列表", notes="")
 	public ResultBean<List<VipCategory>> listCategory(){
 		return new ResultBean<List<VipCategory>>(categoryService.list());
 	}
@@ -51,6 +55,8 @@ public class VipCategoryController {
 	 * 根据编号查询类目信息
 	 * @param id 类目编号
 	 */
+	@ApiOperation(value="根据ID查询类目信息", notes="")
+    @ApiImplicitParam(name = "categoryID", value = "类目ID", required = true, dataType = "String")
 	@GetMapping(value = "/id/{categoryID}")
 	public ResultBean<VipCategory>  getCategoryById(@PathVariable("categoryID") String categoryID){
 		return new ResultBean<VipCategory>(categoryService.getCategoryById(categoryID));
@@ -59,6 +65,8 @@ public class VipCategoryController {
 	 * 根据名称查询类目信息
 	 * @param name 类目名称
 	 */
+	@ApiOperation(value="根据名称查询类目信息", notes="")
+    @ApiImplicitParam(name = "name", value = "类目名称", required = true, dataType = "String")
 	@GetMapping(value = "/name/{name}")
 	public ResultBean<VipCategory> getCategoryByName(@PathVariable("name") String name){
 		return new ResultBean<VipCategory>(categoryService.getCategoryByName(name));
@@ -67,8 +75,9 @@ public class VipCategoryController {
 	 * 添加类目信息
 	 * @param category 
 	 * @return
-	 * 
 	 */
+	@ApiOperation(value="添加类目信息", notes="")
+    @ApiImplicitParam(name = "vipCategory", value = "类目详细实体vipCategory", required = true, dataType = "vipCategory")
 	@PostMapping("/")
 	public ResultBean<VipCategory> addCategory(@RequestBody VipCategory category){
 		return new ResultBean<VipCategory>(categoryService.addCategory(category));
@@ -78,6 +87,8 @@ public class VipCategoryController {
      * @param categoryid
      * @return
      */
+	@ApiOperation(value="删除类目信息", notes="")
+    @ApiImplicitParam(name = "categoryid", value = "类目ID", required = true, dataType = "String")
     @DeleteMapping(value = "/{categoryid}")
     public ResultBean<Integer> delete (@PathVariable String categoryid) {
     	return new ResultBean<Integer>(categoryService.deleteById(categoryid));
@@ -88,6 +99,8 @@ public class VipCategoryController {
      * @param category
      * @return
      */
+	@ApiOperation(value="更新类目信息", notes="")
+	@ApiImplicitParam(name = "vipCategory", value = "类目详细实体vipCategory", required = true, dataType = "vipCategory")
     @PutMapping(value = "/")
     public ResultBean<VipCategory> update (@RequestBody VipCategory category) {
     	return new ResultBean<VipCategory>(categoryService.updateById(category));
@@ -100,7 +113,8 @@ public class VipCategoryController {
      * @return
      */
     @GetMapping(value = "/count")
-    public  ResultBean<Integer> countUser () {
+    @ApiOperation(value="查询类目数量", notes="")
+    public  ResultBean<Integer> countCategory () {
         return new ResultBean<Integer>(categoryService.countCategory());
     }
     
@@ -109,10 +123,11 @@ public class VipCategoryController {
      * @param query
      * @return
      */
+    @ApiOperation(value="类目分页查询", notes="")
+    @ApiImplicitParam(name = "query", value = "类目查询条件实体类", required = true, dataType = "VipCategoryPageQuery")
     @GetMapping(value = "/page")
     public ResultBean<VipCategoryPageQuery> getVipCardPageByQuery (@ModelAttribute  VipCategoryPageQuery query) {
         return new ResultBean<>(categoryService.listByQuery(query));
     }
-    
     
 }

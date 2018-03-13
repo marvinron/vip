@@ -33,6 +33,16 @@ public class VipUsersServiceImpl implements VipUsersService{
     public VipUsers getUserByName(String name) {
         return vipUsersDao.getUserByName(name);
     }
+    
+    @Override
+	public String checkUserByName(String name) {
+    	VipUsers rs = vipUsersDao.checkUserByName(name);
+    	if(rs != null){
+    		return "true";
+    	}else{
+    		return "false";
+    	}
+	}
 
     @Override
     public VipUsers add(VipUsers vipUsers) {
@@ -83,4 +93,5 @@ public class VipUsersServiceImpl implements VipUsersService{
         query.setTotal(vipUsersDao.countUserByQuery(query));
         return query;
     }
+
 }

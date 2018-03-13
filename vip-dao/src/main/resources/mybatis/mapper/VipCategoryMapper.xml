@@ -52,7 +52,7 @@
         </where>
     </select>
     <select id="listByQuery" resultMap="CategoryResultMap" parameterType="com.shimo.vip.query.VipCategoryPageQuery">
-        SELECT * FROM vip_users
+        SELECT * FROM vip_category
         <where>
             <if test="categoryId != null  and categoryId != ''">
                 and CATEGORY_ID like CONCAT('%',#{categoryId},'%' )

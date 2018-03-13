@@ -35,6 +35,7 @@ public class VipCategoryPageQuery extends BasePageQuery<VipCategory> {
      * 修改时间 止
      */
     private Date gmtModifyEnd;
+    
 	public String getCategoryId() {
 		return categoryId;
 	}

@@ -21,6 +21,13 @@ public interface VipUsersDao {
      * @return 用户实体
      */
     VipUsers getUserByName(String name);
+    
+    /**
+     * 检查用户名
+     * @param name 用户名
+     * @return 用户实体
+     */
+    VipUsers checkUserByName(String name);
 
     /**
      * 添加管理员用户

@@ -6,12 +6,12 @@ import java.util.Date;
  * <p>
  * 		服装类目表
  * </p>
- * @author xiaoli
+ * @author shimo
  *
  */
 public class VipCategory {
 	/**
-	 * 类别id
+	 * id自增主键
 	 */
 	private Long id;
 	/**

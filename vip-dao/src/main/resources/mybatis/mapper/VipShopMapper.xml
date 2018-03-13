@@ -1,0 +1,254 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shimo.vip.dao.VipShopDao">
+	<resultMap type="VipShop" id="ShopResultMap">
+		<id property="id" column="ID" />
+		<result property="shopId" column="SHOP_ID"/>
+		<result property="shopStatus" column="SHOP_STATUS"/>
+		<result property="vipAccount" column="VIP_ACCOUNT"/>
+		<result property="vipCard" column="VIP_CARD"/>
+		<result property="goodName" column="GOOD_NAME"/>
+		<result property="goodId" column="GOOD_ID"/>
+		<result property="goodNumber" column="GOOD_NUMBER"/>
+		<result property="goodPrice" column="GOOD_PRICE"/>
+		<result property="goodType" column="GOOD_TYPE"/>
+		<result property="gmtCreate" column="GMT_CREATE"/>
+		<result property="gmtModify" column="GMT_MODIFY"/>
+	</resultMap>
+	<select id="list" resultMap="ShopResultMap">
+		select p.* from vip_shop p
+	</select>
+	<select id="countShop" resultType="java.lang.Integer">
+		select count(*) from vip_shop
+	</select>
+	<select id="getShopById" resultMap="ShopResultMap">
+		select * from vip_shop p where
+		<if test="shopId != null">
+			p.SHOP_ID=#{shopId}
+		</if>
+	</select>
+	<select id="getShopByName" resultMap="ShopResultMap">
+		select * from
+		vip_shop p where p.VIP_ACCOUNT=#{vipAccount}
+	</select>
+	<select id="countShopByQuery" resultType="java.lang.Integer"
+		parameterType="com.shimo.vip.query.VipShopPageQuery">
+		SELECT count(*) FROM vip_shop
+		<where>
+			<if test="shopId != null and shopId != ''">
+				and CATEGORY_ID like CONCAT('%',#{categoryId},'%' )
+			</if>
+			<if test="shopStatus != null and shopStatus != ''">
+				and SHOP_STATUS = #{shopStatus}
+			</if>
+			<if test="vipAccount != null and vipAccount != ''">
+				and VIP_ACCOUNT like CONCAT('%',#{vipAccount},'%' )
+			</if>
+			<if test="vipCard != null and vipCard != ''">
+				and VIP_CARD like CONCAT('%',#{vipCard},'%' )
+			</if>
+			<if test="goodName != null and goodName != ''">
+				and GOOD_NAME like CONCAT('%',#{goodName},'%' )
+			</if>
+			<if test="goodId != null and goodId != ''">
+				and GOOD_ID like CONCAT('%',#{goodId},'%' )
+			</if>
+			<if test="goodNumber != null and goodNumber != ''">
+				and GOOD_NUMBER = #{goodNumber}
+			</if>
+			<if test="goodPrice != null and goodPrice != ''">
+				and GOOD_PRICE = #{goodPrice}
+			</if>
+			<if test="goodType != null and goodType != ''">
+				and GOOD_TYPE like CONCAT('%',#{goodType},'%' )
+			</if>
+			<if test="gmtCreateStart != null ">
+				and #{gmtCreateStart} <![CDATA[<=]]>
+				GMT_CREATE
+			</if>
+			<if test="gmtCreateEnd != null ">
+				and #{gmtCreateEnd} <![CDATA[>=]]>
+				GMT_CREATE
+			</if>
+			<if test="gmtModifyStart != null ">
+				and #{gmtModifyStart} <![CDATA[<=]]>
+				GMT_MODIFY
+			</if>
+			<if test="gmtModifyEnd != null ">
+				and #{gmtModifyEnd} <![CDATA[>=]]>
+				GMT_MODIFY
+			</if>
+		</where>
+	</select>
+	<select id="listByQuery" resultMap="ShopResultMap"
+		parameterType="com.shimo.vip.query.VipShopPageQuery">
+		SELECT * FROM vip_shop
+		<where>
+			<if test="shopId != null and shopId != ''">
+				and CATEGORY_ID like CONCAT('%',#{categoryId},'%' )
+			</if>
+			<if test="shopStatus != null and shopStatus != ''">
+				and SHOP_STATUS = #{shopStatus}
+			</if>
+			<if test="vipAccount != null and vipAccount != ''">
+				and VIP_ACCOUNT like CONCAT('%',#{vipAccount},'%' )
+			</if>
+			<if test="vipCard != null and vipCard != ''">
+				and VIP_CARD like CONCAT('%',#{vipCard},'%' )
+			</if>
+			<if test="goodName != null and goodName != ''">
+				and GOOD_NAME like CONCAT('%',#{goodName},'%' )
+			</if>
+			<if test="goodId != null and goodId != ''">
+				and GOOD_ID like CONCAT('%',#{goodId},'%' )
+			</if>
+			<if test="goodNumber != null and goodNumber != ''">
+				and GOOD_NUMBER = #{goodNumber}
+			</if>
+			<if test="goodPrice != null and goodPrice != ''">
+				and GOOD_PRICE = #{goodPrice}
+			</if>
+			<if test="goodType != null and goodType != ''">
+				and GOOD_TYPE like CONCAT('%',#{goodType},'%' )
+			</if>
+			<if test="gmtCreateStart != null ">
+				and #{gmtCreateStart} <![CDATA[<=]]>
+				GMT_CREATE
+			</if>
+			<if test="gmtCreateEnd != null ">
+				and #{gmtCreateEnd} <![CDATA[>=]]>
+				GMT_CREATE
+			</if>
+			<if test="gmtModifyStart != null ">
+				and #{gmtModifyStart} <![CDATA[<=]]>
+				GMT_MODIFY
+			</if>
+			<if test="gmtModifyEnd != null ">
+				and #{gmtModifyEnd} <![CDATA[>=]]>
+				GMT_MODIFY
+			</if>
+		</where>
+		order by GMT_CREATE desc
+		<if test="start!=null and end!=null">
+			limit #{start},#{end}
+		</if>
+	</select>
+
+	<insert id="addShop" parameterType="VipShop"
+		useGeneratedKeys="true" keyColumn="ID" keyProperty="id">
+		insert into vip_shop
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="shopId != null">
+				`SHOP_ID`,
+			</if>
+			<if test="shopStatus != null">
+				`SHOP_STATUS`,
+			</if>
+			<if test="vipAccount != null">
+				`VIP_ACCOUNT`,
+			</if>
+			<if test="vipCard != null">
+				`VIP_CARD`,
+			</if>
+			<if test="goodName != null">
+				`GOOD_NAME`,
+			</if>
+			<if test="goodId != null">
+				`GOOD_ID`,
+			</if>
+			<if test="goodNumber != null">
+				`GOOD_NUMBER`,
+			</if>
+			<if test="goodPrice != null">
+				`GOOD_PRICE`,
+			</if>
+			<if test="goodType != null">
+				`GOOD_TYPE`,
+			</if>
+			<if test="gmtCreate != null">
+				`GMT_CREATE`,
+			</if>
+			<if test="gmtModify != null">
+				`GMT_MODIFY`,
+			</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="shopId != null">
+				#{shopId},
+			</if>
+			<if test="shopStatus != null">
+				#{shopStatus},
+			</if>
+			<if test="vipAccount != null">
+				#{vipAccount},
+			</if>
+			<if test="vipCard != null">
+				#{vipCard},
+			</if>
+			<if test="goodName != null">
+				#{goodName},
+			</if>
+			<if test="goodId != null">
+				#{goodId},
+			</if>
+			<if test="goodNumber != null">
+				#{goodNumber},
+			</if>
+			<if test="goodPrice != null">
+				#{goodPrice},
+			</if>
+			<if test="goodType != null">
+				#{goodType},
+			</if>
+			<if test="gmtCreate != null">
+				#{gmtCreate},
+			</if>
+			<if test="gmtModify != null">
+				#{gmtModify},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateById">
+		update vip_shop
+		<set>
+			<trim suffixOverrides=",">
+				<if test="shopStatus != null">
+					SHOP_STATUS=#{shopStatus},
+				</if>
+				<if test="vipAccount != null">
+					VIP_CARD=#{vipAccount},
+				</if>
+				<if test="vipCard != null">
+					VIP_CARD=#{vipCard},
+				</if>
+				<if test="goodName != null">
+					GOOD_NAME=#{goodName},
+				</if>
+				<if test="goodId != null">
+					GOOD_ID=#{goodId},
+				</if>
+				<if test="goodNumber != null">
+					GOOD_NUMBER=#{goodNumber},
+				</if>
+				<if test="goodPrice != null">
+					GOOD_PRICE=#{goodPrice},
+				</if>
+				<if test="goodType != null">
+					GOOD_TYPE=#{goodType},
+				</if>
+				<if test="gmtCreate != null">
+					GMT_CREATE=#{gmtCreate},
+				</if>
+				<if test="gmtModify != null">
+					GMT_MODIFY=#{gmtModify},
+				</if>
+			</trim>
+		</set>
+		WHERE SHOP_ID=#{shopId}
+	</update>
+	<delete id="deleteById">
+		DELETE FROM vip_shop
+		WHERE SHOP_ID=#{shopId}
+	</delete>
+</mapper>

@@ -64,7 +64,10 @@
     <select id="getUserByName" resultMap="vipUserResultMap">
         SELECT p.* from vip_users p where p.NAME=#{name}
     </select>
-
+    
+	<select id="checkUserByName" resultMap="vipUserResultMap">
+        SELECT p.name from vip_users p where p.NAME=#{name}
+    </select>
 
     <select id="list" resultType="VipUsers">
       SELECT P.* FROM vip_users P

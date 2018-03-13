@@ -1,0 +1,232 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shimo.vip.dao.VipGoodDao">
+	<resultMap type="VipGood" id="GoodResultMap">
+		<id property="id" column="ID" />
+		<result property="goodId" column="GOOD_ID" />
+		<result property="goodName" column="GOOD_NAME" />
+		<result property="goodPrice" column="GOOD_PRICE" />
+		<result property="goodNumber" column="GOOD_NUM" />
+		<result property="goodStatus" column="GOOD_STATUS" />
+		<result property="goodType" column="GOOD_TYPE" />
+		<result property="goodScore" column="GOOD_SCORE" />
+		<result property="goodDescription" column="GOOD_DESCRIPTION" />
+		<result property="gmtGoodCreate" column="GMT_GOOD_CREATE" />
+		<result property="gmtGoodModify" column="GMT_GOOD_MODIFY" />
+	</resultMap>
+	<select id="list" resultMap="GoodResultMap">
+		select p.* from vip_goods p
+	</select>
+	<select id="countGood" resultType="java.lang.Integer">
+		select count(*) from vip_goods
+	</select>
+	<select id="getGoodById" resultMap="GoodResultMap">
+		select * from vip_goods p where
+		<if test="goodId != null">
+			p.category_id=#{goodId}
+		</if>
+	</select>
+	<select id="getGoodByName" resultMap="GoodResultMap">
+		select * from vip_goods p
+		where p.GOOD_NAME=#{goodName}
+	</select>
+	<select id="countCardByQuery" resultType="java.lang.Integer"
+		parameterType="com.shimo.vip.query.VipGoodPageQuery">
+		SELECT count(*) FROM vip_goods
+		<where>
+			<if test="goodId != null and goodId != ''">
+				and GOOD_ID like CONCAT('%',#{goodId},'%' )
+			</if>
+			<if test="goodName != null and goodName != ''">
+				and GOOD_NAME like CONCAT('%',#{goodName},'%' )
+			</if>
+			<if test="goodPrice != null">
+				and GOOD_PRICE = #{goodPrice}
+			</if>
+			<if test="goodNumber != null">
+				and GOOD_NUMBER = #{goodNumber}
+			</if>
+			<if test="goodStatus != null">
+				and GOOD_STATUS = #{goodStatus}
+			</if>
+			<if test="goodType != null">
+				and GOOD_TYPE = #{goodType}
+			</if>
+			<if test="goodScore != null">
+				and GOOD_SCORE = #{goodScore}
+			</if>
+			<if test="gmtCreateStart != null ">
+				and #{gmtCreateStart} <![CDATA[<=]]>
+				GMT_GOOD_CREATE
+			</if>
+			<if test="gmtCreateEnd != null ">
+				and #{gmtCreateEnd} <![CDATA[>=]]>
+				GMT_GOOD_CREATE
+			</if>
+			<if test="gmtModifyStart != null ">
+				and #{gmtModifyStart} <![CDATA[<=]]>
+				GMT_GOOD_MODIFY
+			</if>
+			<if test="gmtModifyEnd != null ">
+				and #{gmtModifyEnd} <![CDATA[>=]]>
+				GMT_GOOD_MODIFY
+			</if>
+		</where>
+	</select>
+	<select id="listByQuery" resultMap="GoodResultMap"
+		parameterType="com.shimo.vip.query.VipGoodPageQuery">
+		SELECT * FROM vip_goods
+		<where>
+			<if test="goodId != null  and goodId != ''">
+				and GOOD_ID like CONCAT('%',#{goodId},'%' )
+			</if>
+			<if test="goodName != null and goodName != ''">
+				and GOOD_NAME like CONCAT('%',#{goodName},'%' )
+			</if>
+			<if test="goodPrice != null ">
+				and GOOD_PRICE = #{goodPrice}
+			</if>
+			<if test="goodNumber != null ">
+				and GOOD_NUMBER = #{goodNumber}
+			</if>
+			<if test="goodStatus != null ">
+				and GOOD_STATUS = #{goodStatus}
+			</if>
+			<if test="goodType != null ">
+				and GOOD_TYPE like CONCAT('%',#{goodType},'%' )
+			</if>
+			<if test="goodScore != null ">
+				and GOOD_SCORE = #{goodScore}
+			</if>
+			<if test="gmtCreateStart != null ">
+				and #{gmtCreateStart} <![CDATA[<=]]>
+				GMT_GOOD_CREATE
+			</if>
+			<if test="gmtCreateEnd != null ">
+				and #{gmtCreateEnd} <![CDATA[>=]]>
+				GMT_GOOD_CREATE
+			</if>
+			<if test="gmtModifyStart != null ">
+				and #{gmtModifyStart} <![CDATA[<=]]>
+				GMT_GOOD_MODIFY
+			</if>
+			<if test="gmtModifyEnd != null ">
+				and #{gmtModifyEnd} <![CDATA[>=]]>
+				GMT_GOOD_MODIFY
+			</if>
+		</where>
+		order by GMT_GOOD_CREATE desc
+		<if test="start!=null and end!=null">
+			limit #{start},#{end}
+		</if>
+	</select>
+
+	<insert id="addGood" parameterType="VipGood" useGeneratedKeys="true"
+		keyColumn="ID" keyProperty="id">
+		insert into vip_goods
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="goodId != null">
+				`GOOD_ID`,
+			</if>
+			<if test="goodName != null">
+				`GOOD_NAME`,
+			</if>
+			<if test="goodPrice != null">
+				`GOOD_PRICE`,
+			</if>
+			<if test="goodNumber != null">
+				`GOOD_NUM`,
+			</if>
+			<if test="goodStatus != null">
+				`GOOD_STATUS`,
+			</if>
+			<if test="goodType != null">
+				`GOOD_TYPE`,
+			</if>
+			<if test="goodScore != null">
+				`GOOD_SCORE`,
+			</if>
+			<if test="goodDescription != null">
+				`GOOD_DESCRIPTION`,
+			</if>
+			<if test="gmtGoodCreate != null">
+				`GMT_GOOD_CREATE`,
+			</if>
+			<if test="gmtGoodModify != null">
+				`GMT_GOOD_MODIFY`,
+			</if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="goodId != null">
+				#{goodId},
+			</if>
+			<if test="goodName != null">
+				#{goodName},
+			</if>
+			<if test="goodPrice != null">
+				#{goodPrice},
+			</if>
+			<if test="goodNumber != null">
+				#{goodNumber},
+			</if>
+			<if test="goodStatus != null">
+				#{goodStatus},
+			</if>
+			<if test="goodType != null">
+				#{goodType},
+			</if>
+			<if test="goodScore != null">
+				#{goodScore},
+			</if>
+			<if test="goodDescription != null">
+				#{goodDescription},
+			</if>
+			<if test="gmtGoodCreate != null">
+				#{gmtGoodCreate},
+			</if>
+			<if test="gmtGoodModify != null">
+				#{gmtGoodModify},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateById">
+		update vip_goods
+		<set>
+			<trim suffixOverrides=",">
+				<if test="goodName != null">
+					GOOD_NAME=#{goodName},
+				</if>
+				<if test="goodPrice != null">
+					GOOD_PRICE=#{goodPrice},
+				</if>
+				<if test="goodNumber != null">
+					GOOD_NUMBER=#{goodNumber},
+				</if>
+				<if test="goodStatus != null">
+					GOOD_STATUS=#{goodStatus},
+				</if>
+				<if test="goodType != null">
+					GOOD_TYPE=#{goodType},
+				</if>
+				<if test="goodScore != null">
+					GOOD_SCORE=#{goodScore},
+				</if>
+				<if test="goodDescription != null">
+					GOOD_DESCRIPTION=#{goodDescription},
+				</if>
+				<if test="gmtGoodCreate != null">
+					GMT_GOOD_CREATE=#{gmtGoodCreate},
+				</if>
+				<if test="gmtGoodModify != null">
+					GMT_GOOD_MODIFY=#{gmtGoodModify},
+				</if>
+			</trim>
+		</set>
+		WHERE GOOD_ID=#{goodId}
+	</update>
+	<delete id="deleteById">
+		DELETE FROM vip_goods
+		WHERE CATEGORY_ID=#{goodId}
+	</delete>
+</mapper>

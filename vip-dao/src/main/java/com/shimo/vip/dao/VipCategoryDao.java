@@ -5,17 +5,14 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.shimo.vip.model.VipCategory;
-import com.shimo.vip.model.VipUsers;
 import com.shimo.vip.query.VipCategoryPageQuery;
-import com.shimo.vip.query.VipUsersPageQuery;
 
 /**
  * @version V1.0
  * @package com.shimo.vip.dao
- * @dercription 类目持久化接口
- * @date 
- * @author xiaoli
- *
+ * @dercription 类目档案持久化接口
+ * @date 2018-03-09
+ * @author shimo
  */
 public interface VipCategoryDao {
 	/**
@@ -39,7 +36,7 @@ public interface VipCategoryDao {
 	int addCategory(VipCategory category);
 	/**
      * 更新类目信息
-     * @param vipUsers
+     * @param category
      * @return
      */
     int updateById(VipCategory category);

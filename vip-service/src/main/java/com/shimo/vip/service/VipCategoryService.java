@@ -9,9 +9,8 @@ import com.shimo.vip.query.VipCategoryPageQuery;
  * @version V1.0
  * @package com.shimo.vip.service
  * @description 类目信息业务层接口
- * @date 
- * @author xiaoli
- *
+ * @date  2018-03-09
+ * @author shimo
  */
 public interface VipCategoryService {
 	/**

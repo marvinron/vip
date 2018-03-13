@@ -1,0 +1,214 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shimo.vip.dao.VipCardDao">
+	<resultMap type="VipCard" id="CardResultMap">
+		<id property="id" column="ID" javaType="java.lang.Long" jdbcType="BIGINT"/>
+		<result property="cardId" column="CARD_ID" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="vipAccount" column="VIP_ACCOUNT" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="cardScore" column="CARD_SCORE" javaType="java.lang.Integer" jdbcType="BIGINT"/>
+		<result property="cardLevel" column="CARD_LEVEL" javaType="java.lang.Long" jdbcType="BIGINT"/>
+		<result property="cardStatus" column="CARD_STATUS" javaType="java.lang.Long" jdbcType="BIGINT"/>
+		<result property="cardDiscount" column="CARD_DISCOUNT" javaType="java.lang.Long" jdbcType="BIGINT"/>
+		<result property="vipBirth" column="VIP_BIRTH" javaType="java.util.Date" jdbcType="DATE"/>
+		<result property="vipEmail" column="VIP_EMAIL" javaType="java.lang.String" jdbcType="VARCHAR"/>
+		<result property="gmtCardCreate" column="GMT_Card_CREATE" javaType="java.util.Date" jdbcType="DATE"/>
+        <result property="gmtCardModify" column="GMT_Card_MODIFY" javaType="java.util.Date" jdbcType="DATE"/>
+	</resultMap>
+	<select id="list" resultMap="CardResultMap">
+		select p.* from vip_cards p
+	</select>
+	<select id="countCard" resultType="java.lang.Integer">
+        select count(*) from vip_cards
+    </select>
+	<select id="getCardById" resultMap="CardResultMap">
+		select * from vip_cards p where
+		<if test="cardId != null">
+			p.CARD_ID=#{cardId}
+		</if>
+	</select>
+	<select id="getCardByName" resultMap="CardResultMap">
+		select * from vip_cards p where p.VIP_ACCOUNT=#{vipAccount}
+	</select>
+	<select id="countCardByQuery" resultType="java.lang.Integer"  parameterType="com.shimo.vip.query.VipCardPageQuery">
+        SELECT count(*) FROM vip_cards
+        <where>
+            <if test="cardId != null and cardId != ''">
+                and CARD_ID like CONCAT('%',#{cardId},'%' )
+            </if>
+            <if test="vipAccount != null and vipAccount != ''">
+                and VIP_ACCOUNT like CONCAT('%',#{vipAccount},'%' )
+            </if>
+            <if test="cardScore != null">
+                and CARD_SCORE = #{cardScore}
+            </if>
+            <if test="cardLevel != null">
+                and CARD_LEVEL = #{cardLevel}
+            </if>
+            <if test="cardStatus != null">
+                and CARD_STATUS = #{cardStatus}
+            </if>
+            <if test="cardDiscount != null">
+                and CARD_DISCOUNT = #{cardDiscount}
+            </if>
+            <if test="gmtCreateStart != null ">
+                and #{gmtCreateStart} <![CDATA[<=]]> GMT_CARD_CREATE
+            </if>
+            <if test="gmtCreateEnd != null ">
+                and #{gmtCreateEnd} <![CDATA[>=]]> GMT_CARD_CREATE
+            </if>
+            <if test="gmtModifyStart != null ">
+                and #{gmtModifyStart} <![CDATA[<=]]> GMT_CARD_MODIFY
+            </if>
+            <if test="gmtModifyEnd != null ">
+                and #{gmtModifyEnd} <![CDATA[>=]]> GMT_CARD_MODIFY
+            </if>
+        </where>
+    </select>
+    <select id="listByQuery" resultMap="CardResultMap" parameterType="com.shimo.vip.query.VipCardPageQuery">
+        SELECT * FROM vip_cards
+        <where>
+            <if test="cardId != null and cardId != ''">
+                and CARD_ID like CONCAT('%',#{cardId},'%' )
+            </if>
+            <if test="vipAccount != null and vipAccount != ''">
+                and VIP_ACCOUNT like CONCAT('%',#{vipAccount},'%' )
+            </if>
+            <if test="cardScore != null">
+                and CARD_SCORE = #{cardScore}
+            </if>
+            <if test="cardLevel != null">
+                and CARD_LEVEL = #{cardLevel}
+            </if>
+            <if test="cardStatus != null">
+                and CARD_STATUS = #{cardStatus}
+            </if>
+            <if test="cardDiscount != null">
+                and CARD_DISCOUNT = #{cardDiscount}
+            </if>
+            <if test="gmtCreateStart != null ">
+                and #{gmtCreateStart} <![CDATA[<=]]> GMT_CREATE
+            </if>
+            <if test="gmtCreateEnd != null ">
+                and #{gmtCreateEnd} <![CDATA[>=]]> GMT_CREATE
+            </if>
+            <if test="gmtModifyStart != null ">
+                and #{gmtModifyStart} <![CDATA[<=]]> GMT_MODIFY
+            </if>
+            <if test="gmtModifyEnd != null ">
+                and #{gmtModifyEnd} <![CDATA[>=]]> GMT_MODIFY
+            </if>
+        </where>
+        order by GMT_Card_CREATE desc
+        <if test="start!=null and end!=null">
+            limit #{start},#{end}
+        </if>
+    </select>
+    
+	<insert id="addCard"  parameterType="VipCard" useGeneratedKeys="true" keyColumn="ID" keyProperty="id">
+		insert into vip_cards 
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cardId != null">
+				`CARD_ID`,
+			</if>
+			<if test="vipAccount != null">
+				`VIP_ACCOUNT`,
+			</if>
+			<if test="cardScore != null">
+				`CARD_SCORE`,
+			</if>
+			<if test="cardLevel != null">
+                `CARD_LEVEL`,
+            </if>
+            <if test="cardStatus != null">
+                `CARD_STATUS`,
+            </if>
+            <if test="cardDiscount != null">
+                `CARD_DISCOUNT`,
+            </if>
+            <if test="vipBirth != null">
+                `VIP_BIRTH`,
+            </if>
+            <if test="vipEmail != null">
+                `VIP_EMAIL`,
+            </if>
+            <if test="gmtCardCreate != null">
+                `GMT_CARD_CREATE`,
+            </if>
+            <if test="gmtCardModify != null">
+                `GMT_CARD_MODIFY`,
+            </if>
+		</trim>
+		<trim prefix="values(" suffix=")" suffixOverrides=",">
+			<if test="cardId != null">
+				#{cardId},
+			</if>
+			<if test="vipAccount != null">
+				#{vipAccount},
+			</if>
+			<if test="cardScore != null">
+				#{cardScore},
+			</if>
+			<if test="cardLevel != null">
+                #{cardLevel},
+            </if>
+            <if test="cardStatus != null">
+                #{cardStatus},
+            </if>
+            <if test="cardDiscount != null">
+                #{cardDiscount},
+            </if>
+            <if test="vipBirth != null">
+                #{vipBirth},
+            </if>
+            <if test="vipEmail != null">
+                #{vipEmail},
+            </if>
+            <if test="gmtCardCreate != null">
+                #{gmtCardCreate},
+            </if>
+            <if test="gmtCardModify != null">
+                #{gmtCardModify},
+            </if>
+		</trim>
+	</insert>
+	<update id="updateById">
+        update vip_cards
+        <set>
+            <trim suffixOverrides=",">
+                <if test="vipAccount != null">
+                    VIP_ACCOUNT=#{vipAccount},
+                </if>
+                <if test="cardScore != null">
+                    CARD_SCORE=#{cardScore},
+                </if>
+                <if test="cardLevel != null">
+                    CARD_LEVEL=#{cardLevel},
+                </if>
+                <if test="cardStatus != null">
+                    CARD_STATUS=#{cardStatus},
+                </if>
+                <if test="cardDiscount != null">
+                    CARD_DISCOUNT=#{cardDiscount},
+                </if>
+                <if test="vipBirth != null">
+                    VIP_BIRTH=#{vipBirth},
+                </if>
+                <if test="vipEmail != null">
+                    VIP_EMAIL=#{vipEmail},
+                </if>
+                <if test="gmtCardCreate != null">
+                    GMT_CARD_CREATE=#{gmtCardCreate},
+                </if>
+                <if test="gmtCardModify != null">
+                    GMT_CARD_MODIFY=#{gmtCardModify},
+                </if>
+            </trim>
+        </set>
+        WHERE CARD_ID=#{cardId}
+    </update>
+     <delete id="deleteById">
+      DELETE FROM vip_cards
+      WHERE CARD_ID=#{cardId}
+    </delete>
+</mapper>

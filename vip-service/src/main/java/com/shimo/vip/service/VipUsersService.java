@@ -29,7 +29,13 @@ public interface VipUsersService {
      */
     VipUsers getUserByName(String name);
 
-
+    /**
+     * 检查用户名
+     * @param name 用户名
+     * @return true or false
+     */
+    String checkUserByName(String name);
+    
     /**
      * 添加管理员用户
      * @param vipUsers

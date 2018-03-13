@@ -133,5 +133,14 @@ public class VipUsersController {
     public ResultBean<VipUsersPageQuery> getVipCardPageByQuery (@ModelAttribute  VipUsersPageQuery query) {
         return new ResultBean<>(usersService.listByQuery(query));
     }
-
+    /**
+     * 检查用户名是否存在
+     * @param name
+     */
+    @ApiOperation(value="检查会员名称", notes="")
+    @ApiImplicitParam(name = "name", value = "会员姓名", required = true, dataType = "String")
+    @GetMapping(value = "/check/{name}")
+    public ResultBean<String> checkVipUsersByName (@PathVariable("name") String name) {
+        return new ResultBean<String>(usersService.checkUserByName(name));
+    }
 }
