@@ -26,7 +26,7 @@ public class VipGood {
 	/**
 	 * 商品价格
 	 */
-	private double goodPrice;
+	private String goodPrice;
 	/**
 	 * 商品库存
 	 */
@@ -73,10 +73,10 @@ public class VipGood {
 	public void setGoodName(String goodName) {
 		this.goodName = goodName;
 	}
-	public double getGoodPrice() {
+	public String getGoodPrice() {
 		return goodPrice;
 	}
-	public void setGoodPrice(double goodPrice) {
+	public void setGoodPrice(String goodPrice) {
 		this.goodPrice = goodPrice;
 	}
 	public Long getGoodNumber() {

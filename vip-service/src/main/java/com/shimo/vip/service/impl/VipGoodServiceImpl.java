@@ -1,5 +1,6 @@
 package com.shimo.vip.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,8 @@ public class VipGoodServiceImpl implements VipGoodService {
 
 	@Override
 	public VipGood addGood(VipGood vipGood) {
+		vipGood.setGmtGoodCreate(new Date());
+		vipGood.setGmtGoodModify(new Date());
 		int result = vipGoodDao.addGood(vipGood);
 		if(result > 0){
 			return vipGood;
@@ -51,6 +54,7 @@ public class VipGoodServiceImpl implements VipGoodService {
 
 	@Override
 	public VipGood updateById(VipGood vipGood) {
+		vipGood.setGmtGoodModify(new Date());
 		int result = vipGoodDao.updateById(vipGood);
 		if(result > 0){
 			return vipGood;
@@ -70,13 +74,13 @@ public class VipGoodServiceImpl implements VipGoodService {
 
 	@Override
 	public int countCardByQuery(VipGoodPageQuery query) {
-		return vipGoodDao.countCardByQuery(query);
+		return vipGoodDao.countGoodByQuery(query);
 	}
 
 	@Override
 	public VipGoodPageQuery listByQuery(VipGoodPageQuery query) {
 		query.setResult(vipGoodDao.listByQuery(query));
-		query.setTotal(vipGoodDao.countCardByQuery(query));
+		query.setTotal(vipGoodDao.countGoodByQuery(query));
 		return query;
 	}
 

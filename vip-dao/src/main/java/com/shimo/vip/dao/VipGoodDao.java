@@ -57,7 +57,7 @@ public interface VipGoodDao {
      * @param query
      * @return
      */
-    int countCardByQuery (VipGoodPageQuery query);
+    int countGoodByQuery (VipGoodPageQuery query);
     /**
      * 分页条件查询商品信息列表
      * @param query

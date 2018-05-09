@@ -7,13 +7,13 @@
 		<result property="goodId" column="GOOD_ID" />
 		<result property="goodName" column="GOOD_NAME" />
 		<result property="goodPrice" column="GOOD_PRICE" />
-		<result property="goodNumber" column="GOOD_NUM" />
+		<result property="goodNumber" column="GOOD_NUMBER" />
 		<result property="goodStatus" column="GOOD_STATUS" />
 		<result property="goodType" column="GOOD_TYPE" />
 		<result property="goodScore" column="GOOD_SCORE" />
 		<result property="goodDescription" column="GOOD_DESCRIPTION" />
-		<result property="gmtGoodCreate" column="GMT_GOOD_CREATE" />
-		<result property="gmtGoodModify" column="GMT_GOOD_MODIFY" />
+		<result property="gmtGoodCreate" column="GMT_GOOD_CREATE" javaType="java.util.Date" jdbcType="DATE"/>
+		<result property="gmtGoodModify" column="GMT_GOOD_MODIFY" javaType="java.util.Date" jdbcType="DATE"/>
 	</resultMap>
 	<select id="list" resultMap="GoodResultMap">
 		select p.* from vip_goods p
@@ -31,7 +31,7 @@
 		select * from vip_goods p
 		where p.GOOD_NAME=#{goodName}
 	</select>
-	<select id="countCardByQuery" resultType="java.lang.Integer"
+	<select id="countGoodByQuery" resultType="java.lang.Integer"
 		parameterType="com.shimo.vip.query.VipGoodPageQuery">
 		SELECT count(*) FROM vip_goods
 		<where>
@@ -136,7 +136,7 @@
 				`GOOD_PRICE`,
 			</if>
 			<if test="goodNumber != null">
-				`GOOD_NUM`,
+				`GOOD_NUMBER`,
 			</if>
 			<if test="goodStatus != null">
 				`GOOD_STATUS`,

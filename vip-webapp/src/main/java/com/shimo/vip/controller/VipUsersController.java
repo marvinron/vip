@@ -24,6 +24,7 @@ import java.util.List;
  * @Description: 会员信息接口
  * @date 2018/2/7 14:21
  **/
+@CrossOrigin
 @RestController
 @RequestMapping(value = "/user")
 public class VipUsersController {
@@ -45,7 +46,7 @@ public class VipUsersController {
     @ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "User")
     @PostMapping(value = "/token")
     public ResultBean<String> getToken (@RequestBody VipUsers user)  {
-        user = usersService.login(user.getName(),"");
+        user = usersService.login(user.getAccount(),user.getPassword());
         if (user != null) {
             return new ResultBean<String>(TokenUtil.getToken(user.getName()));
         } else {

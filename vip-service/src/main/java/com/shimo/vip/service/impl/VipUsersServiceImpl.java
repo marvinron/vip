@@ -9,6 +9,7 @@ import com.shimo.vip.service.VipUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -46,7 +47,8 @@ public class VipUsersServiceImpl implements VipUsersService{
 
     @Override
     public VipUsers add(VipUsers vipUsers) {
-
+    	vipUsers.setGmtCreate(new Date());
+    	vipUsers.setGmtModify(new Date());
         int result = vipUsersDao.add(vipUsers);
 
         if (result > 0) {
@@ -58,6 +60,7 @@ public class VipUsersServiceImpl implements VipUsersService{
 
     @Override
     public VipUsers updateById(VipUsers vipUsers) {
+    	vipUsers.setGmtModify(new Date());
         int result = vipUsersDao.updateById(vipUsers);
 
         if (result > 0) {
